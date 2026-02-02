@@ -267,3 +267,53 @@ blockquote{
   background: color-mix(in oklab, var(--card) 70%, var(--bg));
   border-radius: 10px;
 }
+
+/* --- LP用スタイル --- */
+
+/* Metrics Bar: 3列固定 */
+.metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; text-align: center; margin: 24px 0; }
+.metrics .num { font-size: 2.4rem; font-weight: 800; color: var(--accent); line-height: 1.1; }
+.metrics .label { font-size: 0.85rem; color: var(--text2); margin-top: 4px; }
+
+/* Step番号 */
+.step-num { font-size: 0.8rem; font-weight: 700; color: var(--accent); letter-spacing: 0.05em; margin-bottom: 6px; }
+
+/* Screenshot Carousel */
+.ss-scroll { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 8px 0 16px; -webkit-overflow-scrolling: touch; }
+.ss-scroll figure { flex: 0 0 auto; width: 220px; scroll-snap-align: center; margin: 0; text-align: center; }
+.ss-scroll img { width: 100%; border-radius: var(--radius); border: 1px solid var(--sep); }
+.ss-scroll figcaption { font-size: 0.85rem; color: var(--text2); margin-top: 8px; }
+
+/* Screenshot placeholder */
+.ss-placeholder { width: 100%; aspect-ratio: 9/19.5; background: var(--sep); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; color: var(--text2); font-size: 0.8rem; }
+
+/* Hero mockup */
+.hero-mockup { max-width: 280px; margin: 24px auto 0; display: block; border-radius: 24px; box-shadow: 0 4px 24px rgba(0,0,0,.12); }
+
+/* Gradient separator */
+.grad-line { height: 4px; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 2px; margin: 32px auto; max-width: 200px; }
+
+/* LP hero */
+.lp-hero { text-align: center; padding: 32px 0 24px; }
+.lp-hero .catchcopy { font-size: 2rem; font-weight: 800; color: var(--text); margin: 12px 0 8px; }
+.lp-hero .subcopy { color: var(--text2); font-size: 1rem; max-width: 480px; margin: 0 auto 20px; }
+
+/* CTA大 */
+.btn-lg { height: 48px; padding: 0 24px; font-size: 1.05rem; }
+
+/* Turning point */
+.turning { text-align: center; padding: 16px 0; }
+.turning .answer { font-size: 1.4rem; font-weight: 700; color: var(--accent); }
+
+/* LP footer links */
+.lp-footer-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
+.lp-footer-links a { font-size: 0.85rem; }
+
+/* LP features grid */
+.features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+.features-grid .card { margin: 0; }
+@media (max-width: 480px) { .features-grid { grid-template-columns: 1fr; } }
+
+/* Before/After table accent */
+.ba-table th { background: color-mix(in oklab, var(--card) 90%, var(--accent)); }
+.ba-table td:last-child { color: var(--accent); font-weight: 600; }
