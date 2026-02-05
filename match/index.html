@@ -26,19 +26,34 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      /* ダークモードベースの配色 */
-      --bg: #0A0C0B;
-      --bg2: #111413;
-      --card: #171A19;
-      --text: #F0F1EE;
-      --text2: #8E918B;
-      --accent: #4CA96A;
-      --accent2: #B18AD3;
-      --accent-light: rgba(76,169,106,.15);
-      --accent2-light: rgba(177,138,211,.15);
-      --sep: #252826;
+      color-scheme: light dark;
+      --bg: #F6F5EF;
+      --bg2: #EDEEE8;
+      --card: #FFFFFF;
+      --text: #0B0C0B;
+      --text2: #6B6E69;
+      --accent: #1E4D2B;
+      --accent2: #5A2A83;
+      --accent-light: rgba(30,77,43,.10);
+      --accent2-light: rgba(90,42,131,.10);
+      --sep: #E6E7E2;
       --radius: 16px;
       --font: 'Outfit', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0A0C0B;
+        --bg2: #111413;
+        --card: #171A19;
+        --text: #F0F1EE;
+        --text2: #8E918B;
+        --accent: #4CA96A;
+        --accent2: #B18AD3;
+        --accent-light: rgba(76,169,106,.12);
+        --accent2-light: rgba(177,138,211,.12);
+        --sep: #252826;
+      }
     }
 
     html { scroll-behavior: smooth; }
