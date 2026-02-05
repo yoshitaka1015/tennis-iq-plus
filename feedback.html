@@ -1,133 +1,221 @@
----
-layout: base
-title: お問い合わせフォーム
----
-
-<section class="card">
-  <a class="back" href="./index.html" aria-label="戻る">← 戻る</a>
-  <h2>お問い合わせフォーム</h2>
-  <p class="desc">アプリに関するご質問・不具合の報告・機能のご要望はこちらからお送りください。サブスクリプションをご契約中の場合は、3営業日以内にサポートより返信いたします。</p>
-
-  <form id="fb" action="https://formspree.io/f/mwpnzrld" method="POST">
-    <div class="field">
-      <label for="email">返信先メールアドレス <span class="req">必須</span></label>
-      <input id="email" type="email" name="email" placeholder="your@example.com" required />
-    </div>
-
-    <div class="field">
-      <label for="subscription">サブスクリプション契約状況 <span class="req">必須</span></label>
-      <select id="subscription" name="subscription" required>
-        <option value="" disabled selected>選択してください</option>
-        <option value="契約中">契約中</option>
-        <option value="検討中">検討中</option>
-        <option value="未契約">未契約</option>
-      </select>
-    </div>
-
-    <div class="field">
-      <label for="category">お問い合わせ種別 <span class="req">必須</span></label>
-      <select id="category" name="category" required>
-        <option value="" disabled selected>選択してください</option>
-        <option value="サブスクリプション問い合わせ">サブスクリプション問い合わせ</option>
-        <option value="不具合の報告">不具合の報告</option>
-        <option value="機能の要望">機能の要望</option>
-        <option value="その他のお問い合わせ">その他のお問い合わせ</option>
-      </select>
-    </div>
-
-    <div class="field">
-      <label for="message"><strong>お問い合わせ内容</strong> <span class="req">必須</span></label>
-      <textarea id="message" name="message" required rows="6"
-        placeholder="例）お問い合わせの詳細や必要な対応、再現手順 など"></textarea>
-    </div>
-
-    <div class="field">
-      <label for="device">端末 / iOSバージョン <span class="opt">任意</span></label>
-      <input id="device" type="text" name="device" placeholder="iPhone 15 / iOS 17.5 など" />
-    </div>
-
-    <!-- スパム対策（ハニーポット） -->
-    <input type="text" name="_gotcha" style="display:none" />
-
-    <!-- 件名 / 言語 / 送信後の遷移先 -->
-    <input type="hidden" name="_subject" value="TennIQ: お問い合わせ" />
-    <input type="hidden" name="_language" value="ja" />
-    <input type="hidden" name="formspree_login_url" value="https://formspree.io/login" />
-    <input type="hidden" name="_redirect" value="{{ '/feedback.html?sent=1' | absolute_url }}" />
-
-    <button type="submit" class="btn">送信する</button>
-  </form>
-
-  <div id="thanks" class="hidden" aria-live="polite">
-    <h3>ありがとうございます！</h3>
-    <p>送信が完了しました。サブスクリプション契約中のお客様には3営業日以内にメールでご返信します。</p>
-    <a class="btn secondary" href="./">トップへ戻る</a>
-  </div>
-</section>
-
-<script>
-  (function () {
-    const ensureLayout = (titleText) => {
-      if (document.querySelector('body > .container > header')) {
-        return;
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>お問い合わせフォーム | TennisIQ+</title>
+  <meta name="description" content="TennisIQ+ へのお問い合わせフォーム" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Noto+Sans+JP:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      color-scheme: light dark;
+      --bg: #F6F5EF; --bg2: #EDEEE8; --card: #FFFFFF; --text: #0B0C0B; --text2: #6B6E69;
+      --accent: #1E4D2B; --accent2: #5A2A83;
+      --accent-light: rgba(30,77,43,.10); --accent2-light: rgba(90,42,131,.10);
+      --sep: #E6E7E2; --radius: 16px;
+      --font: 'Outfit', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0A0C0B; --bg2: #111413; --card: #171A19; --text: #F0F1EE; --text2: #8E918B;
+        --accent: #4CA96A; --accent2: #B18AD3;
+        --accent-light: rgba(76,169,106,.12); --accent2-light: rgba(177,138,211,.12);
+        --sep: #252826;
       }
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: var(--accent2); text-decoration: none; }
 
-      const script = document.currentScript;
-      const body = document.body;
-      const head = document.head || (() => {
-        const createdHead = document.createElement('head');
-        document.documentElement.insertBefore(createdHead, body);
-        return createdHead;
-      })();
+    .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
 
-      if (!head.querySelector("link[rel='stylesheet'][href$='assets/style.css']")) {
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = './assets/style.css';
-        head.appendChild(link);
-      }
+    /* Nav */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: color-mix(in srgb, var(--bg) 85%, transparent);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--sep);
+    }
+    .nav-inner { max-width: 720px; margin: 0 auto; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-brand { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.15rem; color: var(--text); }
+    .nav-brand img { width: 32px; height: 32px; border-radius: 8px; }
+    .nav-cta {
+      display: inline-flex; align-items: center; height: 36px; padding: 0 16px;
+      border-radius: 999px; background: var(--accent); color: #fff;
+      font-weight: 600; font-size: 0.85rem; transition: opacity .2s;
+    }
+    .nav-cta:hover { opacity: .85; }
 
-      const collected = [];
-      let cursor = body.firstChild;
-      while (cursor && cursor !== script) {
-        const next = cursor.nextSibling;
-        collected.push(cursor);
-        body.removeChild(cursor);
-        cursor = next;
-      }
+    /* Page header */
+    .page-hero {
+      padding: 48px 20px 32px;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 80%, var(--accent-light), transparent),
+        radial-gradient(ellipse 50% 40% at 80% 20%, var(--accent2-light), transparent);
+    }
+    .back-link { display: inline-flex; align-items: center; gap: 4px; font-size: 0.85rem; color: var(--text2); margin-bottom: 16px; transition: color .2s; }
+    .back-link:hover { color: var(--accent); }
+    .page-hero h1 { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 800; line-height: 1.3; }
+    .page-hero-desc { font-size: 0.9rem; color: var(--text2); margin-top: 8px; line-height: 1.6; }
 
-      const cleaned = collected.filter((node) => {
-        if (node.nodeType !== Node.TEXT_NODE) return true;
-        const text = node.textContent.trim();
-        if (!text) return false;
-        return !/^(---|layout:|title:)/.test(text);
-      });
+    /* Form */
+    .form-section { padding: 40px 0 56px; }
+    .form-card {
+      background: var(--card); border: 1px solid var(--sep); border-radius: var(--radius);
+      padding: 32px 24px;
+    }
+    .field { margin-bottom: 20px; }
+    .field label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; }
+    .field .req { color: var(--accent2); font-size: 0.75rem; font-weight: 600; }
+    .field .opt { color: var(--text2); font-size: 0.75rem; font-weight: 400; }
+    .field input, .field select, .field textarea {
+      width: 100%; padding: 10px 14px; font-size: 0.9rem; font-family: var(--font);
+      background: var(--bg); border: 1px solid var(--sep); border-radius: 10px;
+      color: var(--text); transition: border-color .2s;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      outline: none; border-color: var(--accent);
+    }
+    .field textarea { resize: vertical; min-height: 120px; }
+    .field select { appearance: none; cursor: pointer; }
 
-      const container = document.createElement('div');
-      container.className = 'container';
+    .submit-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      height: 48px; padding: 0 32px; border: none; cursor: pointer;
+      border-radius: 999px; background: var(--accent); color: #fff;
+      font-family: var(--font); font-weight: 700; font-size: 0.95rem;
+      transition: transform .15s, box-shadow .15s;
+      box-shadow: 0 4px 20px rgba(30,77,43,.25);
+    }
+    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(30,77,43,.35); }
 
-      const header = document.createElement('header');
-      const heading = document.createElement('h1');
-      heading.textContent = 'TennIQ';
-      header.appendChild(heading);
-      container.appendChild(header);
+    .hidden { display: none !important; }
 
-      cleaned.forEach((node) => container.appendChild(node));
+    .thanks-card {
+      background: var(--card); border: 1px solid var(--sep); border-radius: var(--radius);
+      padding: 40px 24px; text-align: center;
+    }
+    .thanks-card h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 12px; }
+    .thanks-card p { font-size: 0.9rem; color: var(--text2); line-height: 1.7; margin-bottom: 20px; }
+    .thanks-btn {
+      display: inline-flex; align-items: center; height: 40px; padding: 0 20px;
+      border-radius: 999px; background: var(--accent-light); color: var(--accent);
+      font-weight: 600; font-size: 0.85rem; transition: opacity .2s;
+    }
+    .thanks-btn:hover { opacity: .85; }
 
-      const footer = document.createElement('footer');
-      footer.textContent = `© ${new Date().getFullYear()} TennIQ`;
-      container.appendChild(footer);
+    /* Footer */
+    .site-footer {
+      padding: 24px 20px; text-align: center;
+      border-top: 1px solid var(--sep); color: var(--text2); font-size: 0.8rem;
+    }
+    .footer-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 8px; }
+    .footer-links a { font-size: 0.8rem; color: var(--text2); }
+    .footer-links a:hover { color: var(--accent2); }
+  </style>
+</head>
+<body>
 
-      body.insertBefore(container, script);
-      document.title = titleText;
-    };
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="./home.html">
+        <img src="assets/images/app-icon.png" alt="TennisIQ+" onerror="this.style.display='none'" />
+        <span>TennisIQ+</span>
+      </a>
+      <a class="nav-cta" href="https://apps.apple.com/jp/app/tenniq-%E6%88%A6%E7%95%A5-%E3%82%B9%E3%82%B3%E3%82%A2%E8%A8%98%E9%8C%B2/id6753627503" target="_blank" rel="noopener">Download</a>
+    </div>
+  </nav>
 
-    ensureLayout('お問い合わせフォーム | TennIQ');
+  <header class="page-hero">
+    <div class="wrap">
+      <a class="back-link" href="./index.html">&larr; 戻る</a>
+      <h1>お問い合わせフォーム</h1>
+      <p class="page-hero-desc">アプリに関するご質問・不具合の報告・機能のご要望はこちらからお送りください。サブスクリプションをご契約中の場合は、3営業日以内にサポートより返信いたします。</p>
+    </div>
+  </header>
 
+  <section class="form-section">
+    <div class="wrap">
+
+      <div class="form-card" id="fb-card">
+        <form id="fb" action="https://formspree.io/f/mwpnzrld" method="POST">
+          <div class="field">
+            <label for="email">返信先メールアドレス <span class="req">必須</span></label>
+            <input id="email" type="email" name="email" placeholder="your@example.com" required />
+          </div>
+
+          <div class="field">
+            <label for="subscription">サブスクリプション契約状況 <span class="req">必須</span></label>
+            <select id="subscription" name="subscription" required>
+              <option value="" disabled selected>選択してください</option>
+              <option value="契約中">契約中</option>
+              <option value="検討中">検討中</option>
+              <option value="未契約">未契約</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="category">お問い合わせ種別 <span class="req">必須</span></label>
+            <select id="category" name="category" required>
+              <option value="" disabled selected>選択してください</option>
+              <option value="サブスクリプション問い合わせ">サブスクリプション問い合わせ</option>
+              <option value="不具合の報告">不具合の報告</option>
+              <option value="機能の要望">機能の要望</option>
+              <option value="その他のお問い合わせ">その他のお問い合わせ</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="message"><strong>お問い合わせ内容</strong> <span class="req">必須</span></label>
+            <textarea id="message" name="message" required rows="6"
+              placeholder="例）お問い合わせの詳細や必要な対応、再現手順 など"></textarea>
+          </div>
+
+          <div class="field">
+            <label for="device">端末 / iOSバージョン <span class="opt">任意</span></label>
+            <input id="device" type="text" name="device" placeholder="iPhone 15 / iOS 17.5 など" />
+          </div>
+
+          <!-- スパム対策（ハニーポット） -->
+          <input type="text" name="_gotcha" style="display:none" />
+
+          <!-- 件名 / 言語 -->
+          <input type="hidden" name="_subject" value="TennisIQ+: お問い合わせ" />
+          <input type="hidden" name="_language" value="ja" />
+          <input type="hidden" name="_redirect" value="./feedback.html?sent=1" />
+
+          <button type="submit" class="submit-btn">送信する</button>
+        </form>
+      </div>
+
+      <div class="thanks-card hidden" id="thanks">
+        <h3>ありがとうございます！</h3>
+        <p>送信が完了しました。サブスクリプション契約中のお客様には3営業日以内にメールでご返信します。</p>
+        <a class="thanks-btn" href="./index.html">トップへ戻る</a>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="./privacy.html">プライバシーポリシー</a>
+      <a href="./terms.html">利用規約</a>
+      <a href="./feedback.html">お問い合わせ</a>
+    </div>
+    <p>&copy; 2025 TennisIQ+</p>
+  </footer>
+
+  <script>
     const params = new URLSearchParams(window.location.search);
     if (params.get('sent') === '1') {
-      document.getElementById('fb')?.classList.add('hidden');
-      document.getElementById('thanks')?.classList.remove('hidden');
+      document.getElementById('fb-card').classList.add('hidden');
+      document.getElementById('thanks').classList.remove('hidden');
     }
-  })();
-</script>
+  </script>
+
+</body>
+</html>

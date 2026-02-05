@@ -3,70 +3,169 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>プライバシーポリシー | TennIQ</title>
-  <meta name="description" content="TennIQ のプライバシーポリシー" />
-  <link rel="stylesheet" href="assets/style.css" />
+  <title>プライバシーポリシー | TennisIQ+</title>
+  <meta name="description" content="TennisIQ+ のプライバシーポリシー" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Noto+Sans+JP:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      color-scheme: light dark;
+      --bg: #F6F5EF; --bg2: #EDEEE8; --card: #FFFFFF; --text: #0B0C0B; --text2: #6B6E69;
+      --accent: #1E4D2B; --accent2: #5A2A83;
+      --accent-light: rgba(30,77,43,.10); --accent2-light: rgba(90,42,131,.10);
+      --sep: #E6E7E2; --radius: 16px;
+      --font: 'Outfit', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0A0C0B; --bg2: #111413; --card: #171A19; --text: #F0F1EE; --text2: #8E918B;
+        --accent: #4CA96A; --accent2: #B18AD3;
+        --accent-light: rgba(76,169,106,.12); --accent2-light: rgba(177,138,211,.12);
+        --sep: #252826;
+      }
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: var(--accent2); text-decoration: none; }
+
+    .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+
+    /* Nav */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: color-mix(in srgb, var(--bg) 85%, transparent);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--sep);
+    }
+    .nav-inner { max-width: 720px; margin: 0 auto; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-brand { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.15rem; color: var(--text); }
+    .nav-brand img { width: 32px; height: 32px; border-radius: 8px; }
+    .nav-cta {
+      display: inline-flex; align-items: center; height: 36px; padding: 0 16px;
+      border-radius: 999px; background: var(--accent); color: #fff;
+      font-weight: 600; font-size: 0.85rem; transition: opacity .2s;
+    }
+    .nav-cta:hover { opacity: .85; }
+
+    /* Page header */
+    .page-hero {
+      padding: 48px 20px 32px;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 80%, var(--accent-light), transparent),
+        radial-gradient(ellipse 50% 40% at 80% 20%, var(--accent2-light), transparent);
+    }
+    .back-link { display: inline-flex; align-items: center; gap: 4px; font-size: 0.85rem; color: var(--text2); margin-bottom: 16px; transition: color .2s; }
+    .back-link:hover { color: var(--accent); }
+    .page-hero h1 { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 800; line-height: 1.3; }
+
+    /* Article */
+    .article-section { padding: 40px 0 56px; }
+    .article-card {
+      background: var(--card); border: 1px solid var(--sep); border-radius: var(--radius);
+      padding: 32px 24px;
+    }
+    .article-card h3 { font-size: 1rem; font-weight: 700; margin: 28px 0 8px; }
+    .article-card h3:first-child { margin-top: 0; }
+    .article-card p { font-size: 0.9rem; color: var(--text2); line-height: 1.7; }
+    .article-card ul { margin: 8px 0; padding-left: 20px; }
+    .article-card li { font-size: 0.9rem; color: var(--text2); line-height: 1.7; margin-bottom: 4px; }
+    .article-card .muted { font-size: 0.82rem; color: var(--text2); opacity: .7; margin-top: 8px; }
+
+    /* Footer */
+    .site-footer {
+      padding: 24px 20px; text-align: center;
+      border-top: 1px solid var(--sep); color: var(--text2); font-size: 0.8rem;
+    }
+    .footer-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 8px; }
+    .footer-links a { font-size: 0.8rem; color: var(--text2); }
+    .footer-links a:hover { color: var(--accent2); }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <header class="page-header">
-      <a class="back" href="./index.html" aria-label="戻る">← 戻る</a>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="./home.html">
+        <img src="assets/images/app-icon.png" alt="TennisIQ+" onerror="this.style.display='none'" />
+        <span>TennisIQ+</span>
+      </a>
+      <a class="nav-cta" href="https://apps.apple.com/jp/app/tenniq-%E6%88%A6%E7%95%A5-%E3%82%B9%E3%82%B3%E3%82%A2%E8%A8%98%E9%8C%B2/id6753627503" target="_blank" rel="noopener">Download</a>
+    </div>
+  </nav>
+
+  <header class="page-hero">
+    <div class="wrap">
+      <a class="back-link" href="./index.html">&larr; 戻る</a>
       <h1>プライバシーポリシー</h1>
-      <div class="rule"></div>
-    </header>
+    </div>
+  </header>
 
-    <article class="card">
-      <h3>1. 基本方針</h3>
-      <p>
-        本アプリは、ユーザーの試合データ（スコア・メモ等）を原則として端末内に保存します。
-        開発者が独自サーバーで個人情報を収集・保管することはありません。
-      </p>
+  <section class="article-section">
+    <div class="wrap">
+      <article class="article-card">
+        <h3>1. 基本方針</h3>
+        <p>
+          本アプリは、ユーザーの試合データ（スコア・メモ等）を原則として端末内に保存します。
+          開発者が独自サーバーで個人情報を収集・保管することはありません。
+        </p>
 
-      <h3>2. 広告（Google AdMob）の利用</h3>
-      <p>
-        本アプリは広告配信のために Google AdMob を利用します。広告の配信・不正防止・計測の目的で、
-        広告ID（IDFA）や IP アドレス等が広告事業者により処理される場合があります。
-        これらのデータの収集・利用は主として広告事業者（Google およびそのパートナー）の方針に従います。
-      </p>
-      <ul>
-        <li><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google プライバシーポリシー</a></li>
-        <li><a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener">Google の広告に関するポリシー</a></li>
-      </ul>
+        <h3>2. 広告（Google AdMob）の利用</h3>
+        <p>
+          本アプリは広告配信のために Google AdMob を利用します。広告の配信・不正防止・計測の目的で、
+          広告ID（IDFA）や IP アドレス等が広告事業者により処理される場合があります。
+          これらのデータの収集・利用は主として広告事業者（Google およびそのパートナー）の方針に従います。
+        </p>
+        <ul>
+          <li><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google プライバシーポリシー</a></li>
+          <li><a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener">Google の広告に関するポリシー</a></li>
+        </ul>
 
-      <h3>3. トラッキングの許可・同意について</h3>
-      <p>
-        iOS の「App にトラッキングの許可を求める（ATT）」に基づき、初回または必要なタイミングで許可/拒否を選択できます。
-        地域や規制により、広告に関する同意画面（同意の取得・変更画面）が表示される場合があります。
-      </p>
+        <h3>3. トラッキングの許可・同意について</h3>
+        <p>
+          iOS の「App にトラッキングの許可を求める（ATT）」に基づき、初回または必要なタイミングで許可/拒否を選択できます。
+          地域や規制により、広告に関する同意画面（同意の取得・変更画面）が表示される場合があります。
+        </p>
 
-      <h3>4. 収集されうるデータの例（広告事業者による）</h3>
-      <ul>
-        <li>識別子：広告ID（IDFA）等</li>
-        <li>利用状況/診断：広告の表示回数、クリック、クラッシュログ、パフォーマンス指標 等</li>
-      </ul>
-      <p class="muted">
-        ※アプリ本体の試合データは端末内に保存され、開発者サーバーには送信されません。
-      </p>
+        <h3>4. 収集されうるデータの例（広告事業者による）</h3>
+        <ul>
+          <li>識別子：広告ID（IDFA）等</li>
+          <li>利用状況/診断：広告の表示回数、クリック、クラッシュログ、パフォーマンス指標 等</li>
+        </ul>
+        <p class="muted">
+          ※アプリ本体の試合データは端末内に保存され、開発者サーバーには送信されません。
+        </p>
 
-      <h3>5. ユーザーの選択肢</h3>
-      <ul>
-        <li>トラッキング許可の変更：iOS 設定 &gt; プライバシーとセキュリティ &gt; トラッキング から本アプリの設定を変更できます。</li>
-        <li>端末内データの削除：アプリ内「設定 &gt; データ管理」から試合・対戦相手・自己分析などの入力データを削除できます（取り消し不可）。</li>
-      </ul>
+        <h3>5. ユーザーの選択肢</h3>
+        <ul>
+          <li>トラッキング許可の変更：iOS 設定 &gt; プライバシーとセキュリティ &gt; トラッキング から本アプリの設定を変更できます。</li>
+          <li>端末内データの削除：アプリ内「設定 &gt; データ管理」から試合・対戦相手・自己分析などの入力データを削除できます（取り消し不可）。</li>
+        </ul>
 
-      <h3>6. データの保存期間</h3>
-      <p>
-        端末内の入力データはユーザー操作で削除するまで保持します。広告に関するデータの保存期間は広告事業者の方針に従います。
-      </p>
+        <h3>6. データの保存期間</h3>
+        <p>
+          端末内の入力データはユーザー操作で削除するまで保持します。広告に関するデータの保存期間は広告事業者の方針に従います。
+        </p>
 
-      <h3>7. 本ポリシーの改定</h3>
-      <p>
-        機能追加や法令・ガイドラインの変更に伴い、本ポリシーを更新することがあります。
-        重要な変更がある場合はアプリ内でお知らせします。
-      </p>
-    </article>
+        <h3>7. 本ポリシーの改定</h3>
+        <p>
+          機能追加や法令・ガイドラインの変更に伴い、本ポリシーを更新することがあります。
+          重要な変更がある場合はアプリ内でお知らせします。
+        </p>
+      </article>
+      <p style="text-align:center; margin-top:20px; font-size:0.8rem; color:var(--text2);">最終更新日：2025-09-13</p>
+    </div>
+  </section>
 
-    <footer class="footer">最終更新日：2025-09-13</footer>
-  </div>
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="./privacy.html">プライバシーポリシー</a>
+      <a href="./terms.html">利用規約</a>
+      <a href="./feedback.html">お問い合わせ</a>
+    </div>
+    <p>&copy; 2025 TennisIQ+</p>
+  </footer>
+
 </body>
 </html>
