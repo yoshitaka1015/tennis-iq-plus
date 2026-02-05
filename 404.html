@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>テニスIQ+</title>
+  <script>
+    // /match/{matchId} へのアクセスを /match/ にリダイレクト（matchIdをクエリパラメータとして保持）
+    (function() {
+      var path = window.location.pathname;
+      var matchPrefix = '/tennis-iq-plus/match/';
+
+      if (path.startsWith(matchPrefix) && path.length > matchPrefix.length) {
+        // /tennis-iq-plus/match/{matchId} -> /tennis-iq-plus/match/?id={matchId}
+        var matchId = path.substring(matchPrefix.length).replace(/\/$/, '');
+        if (matchId) {
+          window.location.replace('/tennis-iq-plus/match/?id=' + matchId);
+          return;
+        }
+      }
+
+      // その他の404はホームにリダイレクト
+      window.location.replace('/tennis-iq-plus/');
+    })();
+  </script>
+</head>
+<body>
+  <p>リダイレクト中...</p>
+</body>
+</html>
