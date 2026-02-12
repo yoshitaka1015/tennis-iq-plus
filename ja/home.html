@@ -1,0 +1,797 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+  <title>TennisIQ+ — テニスを科学する。</title>
+  <meta name="description" content="TennisIQ+ は試合を記録するだけで強み・弱みを可視化。データでテニスの成長を加速させるiPhoneアプリです。" />
+  <meta property="og:title" content="TennisIQ+ — テニスを科学する。" />
+  <meta property="og:description" content="試合を記録するだけで強み・弱みが見えてくる。データでテニスの弱点を可視化。" />
+  <meta property="og:type" content="website" />
+  <link rel="alternate" hreflang="ja" href="./home.html" />
+  <link rel="alternate" hreflang="en" href="../en/home.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Noto+Sans+JP:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== Reset & Tokens ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      color-scheme: light dark;
+      --bg: #F6F5EF;
+      --bg2: #EDEEE8;
+      --card: #FFFFFF;
+      --text: #0B0C0B;
+      --text2: #6B6E69;
+      --accent: #1E4D2B;
+      --accent2: #5A2A83;
+      --accent-light: rgba(30,77,43,.10);
+      --accent2-light: rgba(90,42,131,.10);
+      --sep: #E6E7E2;
+      --radius: 16px;
+      --font: 'Outfit', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0A0C0B;
+        --bg2: #111413;
+        --card: #171A19;
+        --text: #F0F1EE;
+        --text2: #8E918B;
+        --accent: #4CA96A;
+        --accent2: #B18AD3;
+        --accent-light: rgba(76,169,106,.12);
+        --accent2-light: rgba(177,138,211,.12);
+        --sep: #252826;
+      }
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { color: var(--accent2); text-decoration: none; }
+
+    /* ===== Layout ===== */
+    .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+
+    /* ===== Nav ===== */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: color-mix(in srgb, var(--bg) 85%, transparent);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--sep);
+    }
+    .nav-inner {
+      max-width: 720px; margin: 0 auto; padding: 12px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.15rem; color: var(--text); }
+    .nav-brand img { width: 32px; height: 32px; border-radius: 8px; }
+    .nav-cta {
+      display: inline-flex; align-items: center; height: 36px; padding: 0 16px;
+      border-radius: 999px; background: var(--accent); color: #fff;
+      font-weight: 600; font-size: 0.85rem; transition: opacity .2s;
+    }
+    .nav-cta:hover { opacity: .85; }
+
+    /* ===== Hero ===== */
+    .hero {
+      text-align: center; padding: 72px 20px 48px;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 80%, var(--accent-light), transparent),
+        radial-gradient(ellipse 50% 40% at 80% 20%, var(--accent2-light), transparent);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 14px 4px 6px; border-radius: 999px;
+      background: var(--card); border: 1px solid var(--sep);
+      font-size: 0.8rem; font-weight: 600; color: var(--text2);
+      margin-bottom: 20px;
+    }
+    .hero-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
+    .hero h1 {
+      font-size: clamp(2rem, 6vw, 3.2rem); font-weight: 800;
+      line-height: 1.2; letter-spacing: -.02em;
+      margin-bottom: 16px; white-space: nowrap;
+    }
+    .hero h1 .gr {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 1.05rem; color: var(--text2); max-width: 460px; margin: 0 auto 28px;
+    }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 8px; height: 52px; padding: 0 28px;
+      border-radius: 999px; background: var(--accent); color: #fff;
+      font-weight: 700; font-size: 1.05rem; transition: transform .15s, box-shadow .15s;
+      box-shadow: 0 4px 20px rgba(30,77,43,.25);
+    }
+    .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(30,77,43,.35); }
+    .hero-cta svg { width: 18px; height: 18px; }
+    .hero-note { margin-top: 12px; font-size: 0.8rem; color: var(--text2); }
+
+    /* ===== Section ===== */
+    section { padding: 56px 0; }
+    .section-label {
+      display: inline-block; font-size: 0.75rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase; color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .section-title { font-size: 1.6rem; font-weight: 800; line-height: 1.3; margin-bottom: 12px; }
+    .section-desc { color: var(--text2); font-size: 0.95rem; max-width: 520px; margin-bottom: 32px; }
+
+    /* ===== Metrics ===== */
+    .metrics-row {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+      margin: 40px 0 0;
+    }
+    .metric-card {
+      text-align: center; padding: 20px 8px;
+      background: var(--card); border: 1px solid var(--sep); border-radius: var(--radius);
+    }
+    .metric-num { font-size: clamp(1.4rem, 5vw, 2rem); font-weight: 800; color: var(--accent); line-height: 1; white-space: nowrap; }
+    .metric-label { font-size: 0.78rem; color: var(--text2); margin-top: 6px; }
+
+    /* ===== Viz Section ===== */
+    .viz-section { background: var(--bg2); }
+    .viz-grid { display: flex; flex-direction: column; gap: 24px; }
+    .viz-card {
+      background: var(--card); border: 1px solid var(--sep); border-radius: var(--radius);
+      padding: 24px 20px; overflow: hidden;
+      opacity: 0; transform: translateY(24px); transition: opacity .6s, transform .6s;
+    }
+    .viz-card.visible { opacity: 1; transform: translateY(0); }
+    .viz-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .viz-card-title { font-size: 1rem; font-weight: 700; }
+    .viz-card-badge {
+      font-size: 0.7rem; font-weight: 600; padding: 3px 10px;
+      border-radius: 999px; color: var(--accent); background: var(--accent-light);
+    }
+    .viz-legend { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+    .viz-legend-item { display: flex; align-items: center; gap: 4px; font-size: 0.75rem; color: var(--text2); }
+    .viz-legend-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+
+    /* ===== 1. Stats Table (比較テーブル) ===== */
+    .stats-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+    .stats-table th, .stats-table td {
+      padding: 10px 8px; font-size: 0.82rem; text-align: center;
+      border-bottom: 1px solid var(--sep);
+    }
+    .stats-table th:first-child, .stats-table td:first-child { text-align: left; }
+    .stats-table th {
+      font-weight: 700; font-size: 0.75rem; letter-spacing: .04em;
+      color: var(--text2); background: var(--bg2);
+      position: sticky; top: 0;
+    }
+    .stats-table th.col-win { color: var(--accent); }
+    .stats-table th.col-all { color: var(--text2); }
+    .stats-table th.col-lose { color: var(--accent2); }
+    .stats-table td { font-variant-numeric: tabular-nums; }
+    .stats-table td.val-win { color: var(--accent); font-weight: 600; }
+    .stats-table td.val-all { color: var(--text2); }
+    .stats-table td.val-lose { color: var(--accent2); font-weight: 600; }
+    .stats-table tr.highlight td { background: var(--accent-light); }
+    .stats-table tbody tr { opacity: 0; transform: translateX(-8px); }
+    .stats-table.animated tbody tr {
+      opacity: 1; transform: translateX(0);
+      transition: opacity .35s ease, transform .35s ease;
+    }
+
+    /* ===== 2. Time Series Chart (推移グラフ) ===== */
+    .ts-chart { position: relative; height: 200px; }
+    .ts-chart-area {
+      position: absolute; left: 36px; right: 0; top: 0; bottom: 28px;
+      display: flex; align-items: flex-end; gap: 6px; justify-content: space-around;
+    }
+    .ts-y-axis {
+      position: absolute; left: 0; top: 0; bottom: 28px; width: 32px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      font-size: 0.65rem; color: var(--text2); text-align: right; padding-right: 4px;
+    }
+    .ts-x-axis {
+      position: absolute; left: 36px; right: 0; bottom: 0; height: 24px;
+      display: flex; justify-content: space-around;
+      font-size: 0.7rem; color: var(--text2); text-align: center;
+    }
+    .ts-gridlines {
+      position: absolute; left: 36px; right: 0; top: 0; bottom: 28px;
+    }
+    .ts-gridline {
+      position: absolute; left: 0; right: 0; height: 1px;
+      background: var(--sep);
+    }
+    .ts-group { display: flex; gap: 3px; align-items: flex-end; flex: 1; justify-content: center; height: 100%; }
+    .ts-bar {
+      width: 16px; border-radius: 4px 4px 0 0; position: relative;
+      transform-origin: bottom; transform: scaleY(0);
+      transition: transform .8s cubic-bezier(.23,1,.32,1);
+    }
+    .ts-bar.animated { transform: scaleY(1); }
+    .ts-bar-label {
+      position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
+      font-size: 0.6rem; color: var(--text2); white-space: nowrap;
+    }
+    @media (max-width: 480px) {
+      .ts-bar { width: 12px; }
+      .ts-bar-label { font-size: 0.55rem; }
+    }
+
+    /* ===== 3. Stacked Bar (重要ポイント) ===== */
+    .bp-chart { display: flex; align-items: flex-end; gap: 8px; height: 220px; justify-content: space-around; padding-left: 36px; position: relative; }
+    .bp-y-axis {
+      position: absolute; left: 0; top: 0; bottom: 0; width: 32px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      font-size: 0.65rem; color: var(--text2); text-align: right; padding-right: 4px;
+    }
+    .bp-col { flex: 1; max-width: 64px; height: 100%; }
+    .bp-segments-wrap { display: flex; flex-direction: column-reverse; width: 100%; height: 100%; }
+    .bp-segment {
+      width: 100%; border-radius: 2px; position: relative;
+      transform-origin: bottom; transform: scaleY(0);
+      transition: transform .7s cubic-bezier(.23,1,.32,1);
+    }
+    .bp-segment.animated { transform: scaleY(1); }
+    .bp-seg-label {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      font-size: 0.6rem; color: #fff; font-weight: 600; white-space: nowrap;
+      opacity: 0; transition: opacity .3s;
+    }
+    .bp-segment.animated .bp-seg-label { opacity: 1; transition-delay: .5s; }
+    .bp-col-label { margin-top: 6px; font-size: 0.65rem; color: var(--text2); text-align: center; line-height: 1.2; white-space: nowrap; flex-shrink: 0; }
+
+    /* ===== Pain / Solution ===== */
+    .pain-grid { display: grid; gap: 12px; }
+    .pain-card {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 16px; background: var(--card); border: 1px solid var(--sep); border-radius: var(--radius);
+    }
+    .pain-icon {
+      flex-shrink: 0; width: 36px; height: 36px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--accent2-light); color: var(--accent2);
+    }
+    .pain-icon svg { width: 20px; height: 20px; }
+    .pain-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 2px; }
+    .pain-desc { font-size: 0.82rem; color: var(--text2); line-height: 1.5; }
+
+    .step-grid { display: grid; gap: 12px; counter-reset: steps; }
+    .step-card {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 16px; background: var(--card); border: 1px solid var(--sep); border-radius: var(--radius);
+      counter-increment: steps;
+    }
+    .step-num-circle {
+      flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.9rem; color: #fff; background: var(--accent);
+    }
+    .step-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 2px; }
+    .step-desc { font-size: 0.82rem; color: var(--text2); line-height: 1.5; }
+
+    /* ===== Features ===== */
+    .feat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 480px) { .feat-grid { grid-template-columns: 1fr 1fr; } }
+    .feat-card {
+      padding: 18px 16px; background: var(--card); border: 1px solid var(--sep); border-radius: var(--radius);
+    }
+    .feat-icon { width: 28px; height: 28px; margin-bottom: 10px; color: var(--accent); }
+    .feat-icon svg { width: 100%; height: 100%; }
+    .feat-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 4px; }
+    .feat-desc { font-size: 0.8rem; color: var(--text2); line-height: 1.5; }
+
+    /* ===== CTA ===== */
+    .cta-section {
+      text-align: center; padding: 56px 20px;
+      background:
+        radial-gradient(ellipse 50% 40% at 30% 60%, var(--accent-light), transparent),
+        radial-gradient(ellipse 40% 30% at 70% 30%, var(--accent2-light), transparent);
+    }
+    .cta-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 12px; line-height: 1.3; }
+    .cta-sub { color: var(--text2); margin-bottom: 24px; }
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 8px; height: 52px; padding: 0 28px;
+      border-radius: 999px; background: var(--accent); color: #fff;
+      font-weight: 700; font-size: 1.05rem; transition: transform .15s, box-shadow .15s;
+      box-shadow: 0 4px 20px rgba(30,77,43,.25);
+    }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(30,77,43,.35); }
+    .cta-note { margin-top: 12px; font-size: 0.78rem; color: var(--text2); }
+
+    /* ===== Footer ===== */
+    .site-footer {
+      padding: 24px 20px; text-align: center;
+      border-top: 1px solid var(--sep); color: var(--text2); font-size: 0.8rem;
+    }
+    .footer-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 8px; }
+    .footer-links a { font-size: 0.8rem; color: var(--text2); }
+    .footer-links a:hover { color: var(--accent2); }
+
+    /* ===== Scroll Animations ===== */
+    .fade-up {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== Divider ===== */
+    .gradient-divider {
+      height: 3px; max-width: 120px; margin: 0 auto;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <img src="../assets/images/app-icon.png" alt="TennisIQ+" onerror="this.style.display='none'" />
+        <span>TennisIQ+</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <a href="../en/home.html" style="font-size:0.85rem;font-weight:600;color:var(--text2);">EN</a>
+        <a class="nav-cta" href="https://apps.apple.com/jp/app/tenniq-%E6%88%A6%E7%95%A5-%E3%82%B9%E3%82%B3%E3%82%A2%E8%A8%98%E9%8C%B2/id6753627503" target="_blank" rel="noopener">Download</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="wrap">
+      <div class="hero-badge"><span class="dot"></span>iOS App</div>
+      <h1>テニスを<span class="gr">科学する。</span></h1>
+      <p class="hero-sub">試合を記録するだけで、強み・弱みが見えてくる。<br>データで弱点を可視化し、テニスIQを鍛えよう。</p>
+      <a class="hero-cta" href="https://apps.apple.com/jp/app/tenniq-%E6%88%A6%E7%95%A5-%E3%82%B9%E3%82%B3%E3%82%A2%E8%A8%98%E9%8C%B2/id6753627503" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        無料でダウンロード
+      </a>
+      <p class="hero-note">iPhone対応 / 無料</p>
+    </div>
+
+    <div class="wrap">
+      <div class="metrics-row">
+        <div class="metric-card fade-up"><div class="metric-num">10+</div><div class="metric-label">種類の分析</div></div>
+        <div class="metric-card fade-up"><div class="metric-num">20試合</div><div class="metric-label">まで無料で分析</div></div>
+        <div class="metric-card fade-up"><div class="metric-num">0円</div><div class="metric-label">基本無料</div></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Pain Points -->
+  <section>
+    <div class="wrap">
+      <span class="section-label fade-up">Problem</span>
+      <h2 class="section-title fade-up">こんな経験、ありませんか？</h2>
+      <div class="pain-grid">
+        <div class="pain-card fade-up">
+          <div class="pain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <div><div class="pain-title">弱点が分からない</div><div class="pain-desc">練習は頑張ってるのに、試合で同じミスを繰り返してしまう。</div></div>
+        </div>
+        <div class="pain-card fade-up">
+          <div class="pain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg></div>
+          <div><div class="pain-title">感覚頼りの振り返り</div><div class="pain-desc">「なんとなく調子が悪かった」で終わってしまう試合後の反省。</div></div>
+        </div>
+        <div class="pain-card fade-up">
+          <div class="pain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/><line x1="9" y1="10" x2="15" y2="10"/></svg></div>
+          <div><div class="pain-title">アドバイスが抽象的</div><div class="pain-desc">「もっと攻めろ」——具体的に何を変えればいいか分からない。</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="gradient-divider"></div>
+
+  <!-- Solution Flow -->
+  <section>
+    <div class="wrap">
+      <span class="section-label fade-up">Solution</span>
+      <h2 class="section-title fade-up">答えは、データの中にある。</h2>
+      <p class="section-desc fade-up">TennisIQ+は3ステップで、テニスの振り返りを変える。</p>
+      <div class="step-grid">
+        <div class="step-card fade-up">
+          <div class="step-num-circle">1</div>
+          <div><div class="step-title">試合を記録する</div><div class="step-desc">ポイントごとにタップするだけ。試合中でもサッと入力できるシンプルUI。</div></div>
+        </div>
+        <div class="step-card fade-up">
+          <div class="step-num-circle">2</div>
+          <div><div class="step-title">勝因・敗因が見える</div><div class="step-desc">スコアと得失点理由を記録すれば、勝因・敗因が一目瞭然。</div></div>
+        </div>
+        <div class="step-card fade-up">
+          <div class="step-num-circle">3</div>
+          <div><div class="step-title">データで成長を実感</div><div class="step-desc">試合がたまるほど分析の精度が上がり、成長の道筋がクリアに。</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Data Visualization -->
+  <section class="viz-section">
+    <div class="wrap">
+      <span class="section-label fade-up">Analytics</span>
+      <h2 class="section-title fade-up">アプリが生み出す分析</h2>
+      <p class="section-desc fade-up">実際にTennisIQ+が表示する3つのコア分析を体験してください。</p>
+
+      <div class="viz-grid">
+
+        <!-- Viz 1: 比較テーブル (AnalysisStatsTable) -->
+        <div class="viz-card" id="viz-table">
+          <div class="viz-card-header">
+            <div class="viz-card-title">統計比較テーブル</div>
+            <div class="viz-card-badge">Stats Comparison</div>
+          </div>
+          <div class="viz-legend">
+            <div class="viz-legend-item"><span class="viz-legend-dot" style="background:var(--accent)"></span>WIN</div>
+            <div class="viz-legend-item"><span class="viz-legend-dot" style="background:var(--text2)"></span>ALL</div>
+            <div class="viz-legend-item"><span class="viz-legend-dot" style="background:var(--accent2)"></span>LOSE</div>
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="stats-table" id="statsTable">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th class="col-win">WIN</th>
+                  <th class="col-all">ALL</th>
+                  <th class="col-lose">LOSE</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Viz 2: 推移グラフ (TimeSeriesStatsView) -->
+        <div class="viz-card" id="viz-ts">
+          <div class="viz-card-header">
+            <div class="viz-card-title">勝率の推移</div>
+            <div class="viz-card-badge">Time Series</div>
+          </div>
+          <div class="viz-legend">
+            <div class="viz-legend-item"><span class="viz-legend-dot" style="background:var(--accent)"></span>WIN</div>
+            <div class="viz-legend-item"><span class="viz-legend-dot" style="background:var(--text2)"></span>ALL</div>
+            <div class="viz-legend-item"><span class="viz-legend-dot" style="background:var(--accent2)"></span>LOSE</div>
+          </div>
+          <div class="ts-chart" id="tsChart"></div>
+        </div>
+
+        <!-- Viz 3: 重要ポイント (BigPointHeatmapView) -->
+        <div class="viz-card" id="viz-bp">
+          <div class="viz-card-header">
+            <div class="viz-card-title">重要ポイント分析</div>
+            <div class="viz-card-badge">Big Point</div>
+          </div>
+          <div class="viz-legend" id="bpLegend"></div>
+          <div class="bp-chart" id="bpChart"></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- All Features -->
+  <section>
+    <div class="wrap">
+      <span class="section-label fade-up">Features</span>
+      <h2 class="section-title fade-up">すべての機能</h2>
+      <div class="feat-grid">
+        <div class="feat-card fade-up"><div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 14l2 2 4-4"/></svg></div><div class="feat-name">試合記録</div><div class="feat-desc">ポイント単位で試合をリアルタイム記録。</div></div>
+        <div class="feat-card fade-up"><div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4-4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div><div class="feat-name">フレンドに依頼</div><div class="feat-desc">仲間やコーチに記録を頼んで、正確なデータを残せる。</div></div>
+        <div class="feat-card fade-up"><div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></div><div class="feat-name">フレンドに共有</div><div class="feat-desc">試合データをフレンドと共有して、一緒に振り返り。</div></div>
+        <div class="feat-card fade-up"><div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="7" height="16" rx="1.5"/><rect x="14" y="4" width="7" height="16" rx="1.5"/></svg></div><div class="feat-name">勝敗比較</div><div class="feat-desc">勝ち試合と負け試合のパターン差を比較。</div></div>
+        <div class="feat-card fade-up"><div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div><div class="feat-name">成長グラフ</div><div class="feat-desc">試合ごとの推移をグラフで可視化。</div></div>
+        <div class="feat-card fade-up"><div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="10"/></svg></div><div class="feat-name">ビッグポイント分析</div><div class="feat-desc">勝負所でのパフォーマンスを数値化。</div></div>
+        <div class="feat-card fade-up"><div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><div class="feat-name">プレミアム</div><div class="feat-desc">無制限に試合を保存、全期間の分析で成長を実感。</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="wrap">
+      <h2 class="cta-title fade-up">テニスを、<span class="gr" style="background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">科学する。</span></h2>
+      <p class="cta-sub fade-up">試合を記録するだけで、あなたの強み・弱みが見えてくる。</p>
+      <a class="cta-btn fade-up" href="https://apps.apple.com/jp/app/tenniq-%E6%88%A6%E7%95%A5-%E3%82%B9%E3%82%B3%E3%82%A2%E8%A8%98%E9%8C%B2/id6753627503" target="_blank" rel="noopener">
+        App Storeで無料ダウンロード
+      </a>
+      <p class="cta-note fade-up">iPhone対応 / 無料</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="./privacy.html">プライバシーポリシー</a>
+      <a href="./terms.html">利用規約</a>
+      <a href="./feedback.html">お問い合わせ</a>
+    </div>
+    <p>&copy; 2025 TennisIQ+</p>
+    <p style="margin-top:8px;font-size:0.7rem;color:var(--text2);opacity:.7;">画面は開発中のイメージを含みます</p>
+  </footer>
+
+  <script>
+    /* ==============================
+       Intersection Observer: fade-up & viz cards
+       ============================== */
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          const delay = e.target.dataset.delay || 0;
+          setTimeout(() => e.target.classList.add('visible'), delay);
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.fade-up, .viz-card').forEach((el, i) => {
+      el.dataset.delay = (i % 6) * 80;
+      io.observe(el);
+    });
+
+    /* ==============================
+       CSS color helper
+       ============================== */
+    const cs = getComputedStyle(document.documentElement);
+    const C = {
+      accent:  cs.getPropertyValue('--accent').trim(),
+      accent2: cs.getPropertyValue('--accent2').trim(),
+      text2:   cs.getPropertyValue('--text2').trim(),
+    };
+
+    /* ==============================
+       1. 比較テーブル (AnalysisStatsTable)
+       WIN / ALL / LOSE 3列、差が大きい行はハイライト
+       ============================== */
+    const tableData = [
+      { label: 'サーブキープ率',         win: 0.78, all: 0.62, lose: 0.41, type: 'rate' },
+      { label: 'ブレーク率',             win: 0.45, all: 0.32, lose: 0.18, type: 'rate' },
+      { label: '1stサーブIN率',          win: 0.68, all: 0.61, lose: 0.53, type: 'rate' },
+      { label: '1stサーブ時取得率',      win: 0.74, all: 0.63, lose: 0.48, type: 'rate' },
+      { label: '2ndサーブ時取得率',      win: 0.55, all: 0.44, lose: 0.31, type: 'rate' },
+      { label: 'リターン時取得率',       win: 0.52, all: 0.41, lose: 0.28, type: 'rate' },
+      { label: 'ウィナー数',             win: 12,   all: 9.2,  lose: 5.8,  type: 'count' },
+      { label: 'FHエラー数',             win: 4.2,  all: 6.1,  lose: 8.5,  type: 'count' },
+      { label: 'BHエラー数',             win: 3.1,  all: 4.8,  lose: 7.2,  type: 'count' },
+      { label: 'ダブルフォルト率',       win: 0.04, all: 0.07, lose: 0.12, type: 'rate' },
+    ];
+
+    function fmtVal(v, type) {
+      if (type === 'rate') return (v * 100).toFixed(1) + '%';
+      if (type === 'count') return v.toFixed(0);
+      return v.toFixed(1);
+    }
+
+    const tbody = document.querySelector('#statsTable tbody');
+    tableData.forEach(r => {
+      const diff = Math.abs(r.win - r.lose);
+      const threshold = r.type === 'rate' ? 0.15 : 5;
+      const hl = diff >= threshold ? ' highlight' : '';
+      const tr = document.createElement('tr');
+      tr.className = hl;
+      tr.innerHTML = `<td>${r.label}</td><td class="val-win">${fmtVal(r.win, r.type)}</td><td class="val-all">${fmtVal(r.all, r.type)}</td><td class="val-lose">${fmtVal(r.lose, r.type)}</td>`;
+      tbody.appendChild(tr);
+    });
+
+    // Animate table rows on visibility
+    const tableObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const table = e.target.querySelector('.stats-table');
+          if (table) {
+            table.querySelectorAll('tbody tr').forEach((tr, i) => {
+              tr.style.transitionDelay = (i * 60) + 'ms';
+            });
+            table.classList.add('animated');
+          }
+          tableObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    tableObs.observe(document.getElementById('viz-table'));
+
+    /* ==============================
+       2. 推移グラフ (TimeSeriesStatsView)
+       月別 WIN/ALL/LOSE 棒グラフ
+       ============================== */
+    const tsData = [
+      { month: '9月',  win: 0.65, all: 0.55, lose: 0.38 },
+      { month: '10月', win: 0.72, all: 0.58, lose: 0.35 },
+      { month: '11月', win: 0.68, all: 0.61, lose: 0.42 },
+      { month: '12月', win: 0.80, all: 0.64, lose: 0.39 },
+      { month: '1月',  win: 0.75, all: 0.66, lose: 0.44 },
+    ];
+
+    const maxTs = 1.0;
+    const chartEl = document.getElementById('tsChart');
+
+    // Gridlines
+    const gridContainer = document.createElement('div');
+    gridContainer.className = 'ts-gridlines';
+    [0, 25, 50, 75, 100].forEach(pct => {
+      const line = document.createElement('div');
+      line.className = 'ts-gridline';
+      line.style.bottom = pct + '%';
+      gridContainer.appendChild(line);
+    });
+    chartEl.appendChild(gridContainer);
+
+    // Y-axis
+    const yAxis = document.createElement('div');
+    yAxis.className = 'ts-y-axis';
+    ['100%','75%','50%','25%','0%'].forEach(l => {
+      const s = document.createElement('span');
+      s.textContent = l;
+      yAxis.appendChild(s);
+    });
+    chartEl.appendChild(yAxis);
+
+    // Bars
+    const chartArea = document.createElement('div');
+    chartArea.className = 'ts-chart-area';
+
+    tsData.forEach(d => {
+      const group = document.createElement('div');
+      group.className = 'ts-group';
+
+      [
+        { val: d.win,  color: C.accent, label: (d.win * 100).toFixed(0) + '%' },
+        { val: d.all,  color: C.text2,  label: (d.all * 100).toFixed(0) + '%' },
+        { val: d.lose, color: C.accent2, label: (d.lose * 100).toFixed(0) + '%' },
+      ].forEach(b => {
+        const bar = document.createElement('div');
+        bar.className = 'ts-bar';
+        const h = (b.val / maxTs) * 100;
+        bar.style.height = h + '%';
+        bar.style.background = b.color;
+        const lbl = document.createElement('span');
+        lbl.className = 'ts-bar-label';
+        lbl.textContent = b.label;
+        bar.appendChild(lbl);
+        group.appendChild(bar);
+      });
+      chartArea.appendChild(group);
+    });
+    chartEl.appendChild(chartArea);
+
+    // X-axis
+    const xAxis = document.createElement('div');
+    xAxis.className = 'ts-x-axis';
+    tsData.forEach(d => {
+      const s = document.createElement('span');
+      s.textContent = d.month;
+      s.style.flex = '1';
+      xAxis.appendChild(s);
+    });
+    chartEl.appendChild(xAxis);
+
+    // Animate bars
+    const tsObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('.ts-bar').forEach((bar, i) => {
+            bar.style.transitionDelay = (i * 60) + 'ms';
+            bar.classList.add('animated');
+          });
+          tsObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    tsObs.observe(document.getElementById('viz-ts'));
+
+    /* ==============================
+       3. 重要ポイント分析 (BigPointHeatmapView)
+       積上棒グラフ、6カテゴリ、スコア状況別
+       ============================== */
+    // Convert any CSS color to rgba with given alpha
+    function withAlpha(color, alpha) {
+      const el = document.createElement('div');
+      el.style.color = color;
+      document.body.appendChild(el);
+      const rgb = getComputedStyle(el).color;
+      document.body.removeChild(el);
+      const m = rgb.match(/[\d.]+/g);
+      if (!m) return color;
+      return `rgba(${m[0]},${m[1]},${m[2]},${alpha})`;
+    }
+
+    const bpCategories = [
+      { id: 'active',         label: '自分ウィナー', color: C.accent },
+      { id: 'opponentError',  label: '相手エラー',   color: withAlpha(C.accent, 0.45) },
+      { id: 'opponentWinner', label: '相手ウィナー', color: C.accent2 },
+      { id: 'fhError',        label: 'FHエラー',     color: withAlpha(C.accent2, 0.8) },
+      { id: 'bhError',        label: 'BHエラー',     color: withAlpha(C.accent2, 0.6) },
+      { id: 'doubleFault',    label: 'Wフォルト',    color: withAlpha(C.accent2, 0.4) },
+    ];
+
+    // Legend
+    const legendEl = document.getElementById('bpLegend');
+    bpCategories.forEach(cat => {
+      const item = document.createElement('div');
+      item.className = 'viz-legend-item';
+      item.innerHTML = `<span class="viz-legend-dot" style="background:${cat.color}"></span>${cat.label}`;
+      legendEl.appendChild(item);
+    });
+
+    const bpData = [
+      { situation: '全体',      active: 0.22, opponentError: 0.28, opponentWinner: 0.18, fhError: 0.15, bhError: 0.12, doubleFault: 0.05 },
+      { situation: '0-0時',     active: 0.25, opponentError: 0.30, opponentWinner: 0.15, fhError: 0.14, bhError: 0.10, doubleFault: 0.06 },
+      { situation: '30-30時',   active: 0.20, opponentError: 0.22, opponentWinner: 0.22, fhError: 0.18, bhError: 0.12, doubleFault: 0.06 },
+      { situation: 'Deuce',     active: 0.18, opponentError: 0.20, opponentWinner: 0.24, fhError: 0.19, bhError: 0.13, doubleFault: 0.06 },
+      { situation: 'ゲームpt', active: 0.24, opponentError: 0.26, opponentWinner: 0.20, fhError: 0.16, bhError: 0.10, doubleFault: 0.04 },
+    ];
+
+    const bpChartEl = document.getElementById('bpChart');
+    const chartH = 220;
+
+    // Y-axis
+    const bpYAxis = document.createElement('div');
+    bpYAxis.className = 'bp-y-axis';
+    ['100%','75%','50%','25%','0%'].forEach(l => {
+      const s = document.createElement('span');
+      s.textContent = l;
+      bpYAxis.appendChild(s);
+    });
+    bpChartEl.appendChild(bpYAxis);
+
+    bpData.forEach(d => {
+      const col = document.createElement('div');
+      col.className = 'bp-col';
+
+      const wrap = document.createElement('div');
+      wrap.className = 'bp-segments-wrap';
+
+      const catKeys = ['active','opponentError','opponentWinner','fhError','bhError','doubleFault'];
+      catKeys.forEach(key => {
+        const seg = document.createElement('div');
+        seg.className = 'bp-segment';
+        const pct = d[key] * 100;
+        seg.style.height = pct + '%';
+        seg.style.background = bpCategories.find(c => c.id === key).color;
+        const rawPct = d[key] * 100;
+        if (rawPct >= 8) {
+          const lbl = document.createElement('span');
+          lbl.className = 'bp-seg-label';
+          lbl.textContent = Math.round(rawPct) + '%';
+          seg.appendChild(lbl);
+        }
+        wrap.appendChild(seg);
+      });
+
+      col.appendChild(wrap);
+
+      const label = document.createElement('div');
+      label.className = 'bp-col-label';
+      label.textContent = d.situation.replace('\n', '');
+      col.appendChild(label);
+      bpChartEl.appendChild(col);
+    });
+
+    // Animate stacked bars
+    const bpObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('.bp-segment').forEach((seg, i) => {
+            seg.style.transitionDelay = (i * 40) + 'ms';
+            seg.classList.add('animated');
+          });
+          bpObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    bpObs.observe(document.getElementById('viz-bp'));
+  </script>
+
+</body>
+</html>

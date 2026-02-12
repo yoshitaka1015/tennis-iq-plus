@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+  <title>プライバシーポリシー | TennisIQ+</title>
+  <meta name="description" content="TennisIQ+ のプライバシーポリシー" />
+  <link rel="alternate" hreflang="ja" href="./privacy.html" />
+  <link rel="alternate" hreflang="en" href="../en/privacy.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Noto+Sans+JP:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      color-scheme: light dark;
+      --bg: #F6F5EF; --bg2: #EDEEE8; --card: #FFFFFF; --text: #0B0C0B; --text2: #6B6E69;
+      --accent: #1E4D2B; --accent2: #5A2A83;
+      --accent-light: rgba(30,77,43,.10); --accent2-light: rgba(90,42,131,.10);
+      --sep: #E6E7E2; --radius: 16px;
+      --font: 'Outfit', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0A0C0B; --bg2: #111413; --card: #171A19; --text: #F0F1EE; --text2: #8E918B;
+        --accent: #4CA96A; --accent2: #B18AD3;
+        --accent-light: rgba(76,169,106,.12); --accent2-light: rgba(177,138,211,.12);
+        --sep: #252826;
+      }
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: var(--accent2); text-decoration: none; }
+
+    .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+
+    /* Nav */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: color-mix(in srgb, var(--bg) 85%, transparent);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--sep);
+    }
+    .nav-inner { max-width: 720px; margin: 0 auto; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-brand { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.15rem; color: var(--text); }
+    .nav-brand img { width: 32px; height: 32px; border-radius: 8px; }
+    .nav-cta {
+      display: inline-flex; align-items: center; height: 36px; padding: 0 16px;
+      border-radius: 999px; background: var(--accent); color: #fff;
+      font-weight: 600; font-size: 0.85rem; transition: opacity .2s;
+    }
+    .nav-cta:hover { opacity: .85; }
+
+    /* Page header */
+    .page-hero {
+      padding: 48px 20px 32px;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 80%, var(--accent-light), transparent),
+        radial-gradient(ellipse 50% 40% at 80% 20%, var(--accent2-light), transparent);
+    }
+    .back-link { display: inline-flex; align-items: center; gap: 4px; font-size: 0.85rem; color: var(--text2); margin-bottom: 16px; transition: color .2s; }
+    .back-link:hover { color: var(--accent); }
+    .page-hero h1 { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 800; line-height: 1.3; }
+
+    /* Article */
+    .article-section { padding: 40px 0 56px; }
+    .article-card {
+      background: var(--card); border: 1px solid var(--sep); border-radius: var(--radius);
+      padding: 32px 24px;
+    }
+    .article-card h3 { font-size: 1rem; font-weight: 700; margin: 28px 0 8px; }
+    .article-card h3:first-child { margin-top: 0; }
+    .article-card p { font-size: 0.9rem; color: var(--text2); line-height: 1.7; }
+    .article-card ul { margin: 8px 0; padding-left: 20px; }
+    .article-card li { font-size: 0.9rem; color: var(--text2); line-height: 1.7; margin-bottom: 4px; }
+    .article-card .muted { font-size: 0.82rem; color: var(--text2); opacity: .7; margin-top: 8px; }
+
+    /* Footer */
+    .site-footer {
+      padding: 24px 20px; text-align: center;
+      border-top: 1px solid var(--sep); color: var(--text2); font-size: 0.8rem;
+    }
+    .footer-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 8px; }
+    .footer-links a { font-size: 0.8rem; color: var(--text2); }
+    .footer-links a:hover { color: var(--accent2); }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="./home.html">
+        <img src="../assets/images/app-icon.png" alt="TennisIQ+" onerror="this.style.display='none'" />
+        <span>TennisIQ+</span>
+      </a>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <a href="../en/privacy.html" style="font-size:0.85rem;font-weight:600;color:var(--text2);">EN</a>
+        <a class="nav-cta" href="https://apps.apple.com/jp/app/tenniq-%E6%88%A6%E7%95%A5-%E3%82%B9%E3%82%B3%E3%82%A2%E8%A8%98%E9%8C%B2/id6753627503" target="_blank" rel="noopener">Download</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="page-hero">
+    <div class="wrap">
+      <a class="back-link" href="./index.html">&larr; 戻る</a>
+      <h1>プライバシーポリシー</h1>
+    </div>
+  </header>
+
+  <section class="article-section">
+    <div class="wrap">
+      <article class="article-card">
+        <h3>1. 基本方針</h3>
+        <p>
+          本アプリは、ユーザーの試合データ（スコア・メモ等）をクラウド（Firebase）に保存し、
+          複数端末間での同期やフレンドとのデータ共有を可能にします。
+        </p>
+
+        <h3>2. アカウントとクラウド同期</h3>
+        <p>
+          本アプリの利用にはアカウント登録が必要です。メールアドレスとパスワードによる認証を行い、
+          Firebase Authentication を利用してアカウント情報を管理します。
+          登録されたメールアドレスは認証・アカウント回復の目的でのみ使用します。
+        </p>
+
+        <h3>3. 収集するデータ</h3>
+        <ul>
+          <li>アカウント情報:メールアドレス、ユーザーID、ニックネーム、アイコン、所属、区分、レベル、自己紹介</li>
+          <li>試合データ:スコア、得失点理由、対戦相手情報、メモ</li>
+          <li>フレンド関係:フレンドリスト、共有設定</li>
+          <li>利用状況:最終ログイン日時（サービス改善目的）</li>
+        </ul>
+
+        <h3>4. データの利用目的</h3>
+        <ul>
+          <li>試合データの保存・同期</li>
+          <li>フレンド間でのデータ共有</li>
+          <li>アカウントの認証・管理</li>
+          <li>サービスの改善・不具合対応</li>
+        </ul>
+
+        <h3>5. ユーザーの選択肢</h3>
+        <ul>
+          <li>アカウント削除:アプリ内「設定 &gt; アカウント削除」から全データを削除できます（取り消し不可）。</li>
+        </ul>
+
+        <h3>6. データの保存期間</h3>
+        <p>
+          アカウントを削除するまでクラウド上にデータを保持します。
+          アカウント削除時に、関連するすべてのデータを削除します。
+        </p>
+
+        <h3>7. 本ポリシーの改定</h3>
+        <p>
+          機能追加や法令・ガイドラインの変更に伴い、本ポリシーを更新することがあります。
+          重要な変更がある場合はアプリ内でお知らせします。
+        </p>
+      </article>
+      <p style="text-align:center; margin-top:20px; font-size:0.8rem; color:var(--text2);">最終更新日:2026-02-05</p>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="./privacy.html">プライバシーポリシー</a>
+      <a href="./terms.html">利用規約</a>
+      <a href="./feedback.html">お問い合わせ</a>
+    </div>
+    <p>&copy; 2025 TennisIQ+</p>
+  </footer>
+
+</body>
+</html>

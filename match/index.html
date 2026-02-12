@@ -270,5 +270,39 @@
       <a href="../terms.html">利用規約</a>
     </div>
   </div>
+
+  <script>
+    (function() {
+      var isJa = (navigator.language || 'en').startsWith('ja');
+
+      // テキスト切替
+      document.querySelector('.badge').innerHTML = '<span class="dot"></span>' + (isJa ? '試合共有' : 'Match Shared');
+      document.querySelector('h1').innerHTML = isJa
+        ? '試合詳細を<span class="gr">確認しよう</span>'
+        : 'View Match <span class="gr">Details</span>';
+      document.querySelector('.subtitle').innerHTML = isJa
+        ? 'この試合の詳細を見るには<br>テニスIQ+アプリが必要です'
+        : 'You need the TennisIQ+ app<br>to view this match';
+      document.querySelector('.cta-btn').innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' + (isJa ? 'App Storeでダウンロード' : 'Download on App Store');
+      document.querySelector('.note').textContent = isJa ? '自動的にApp Storeへ移動します...' : 'Redirecting to App Store...';
+
+      var labels = document.querySelectorAll('.feature-label');
+      var labelTexts = isJa ? ['試合記録', '統計分析', '共有'] : ['Match Recording', 'Analytics', 'Sharing'];
+      labels.forEach(function(el, i) { el.textContent = labelTexts[i]; });
+
+      // フッターリンク
+      var langPath = isJa ? 'ja' : 'en';
+      var footerLinks = document.querySelectorAll('.footer-links a');
+      if (footerLinks.length >= 2) {
+        footerLinks[0].href = '../' + langPath + '/privacy.html';
+        footerLinks[0].textContent = isJa ? 'プライバシーポリシー' : 'Privacy Policy';
+        footerLinks[1].href = '../' + langPath + '/terms.html';
+        footerLinks[1].textContent = isJa ? '利用規約' : 'Terms of Service';
+      }
+
+      // title
+      document.title = isJa ? 'テニスIQ+ - 試合詳細' : 'TennisIQ+ - Match Details';
+    })();
+  </script>
 </body>
 </html>
